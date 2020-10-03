@@ -1,0 +1,38 @@
+body {
+    font-family: 'Raleway', sans-serif;
+}
+
+#forecast {
+    position: relative;
+    float: right;
+}
+.weather-conditions {
+    line-height: 3;
+    box-sizing: border-box;
+    width: 100%;
+    border: 1px solid grey;
+    float: left;
+    padding-bottom: 110px;
+    padding-left: 10px;
+  }
+  .fiveDay {
+      box-sizing: content-box;
+      width: 100%;
+      height: auto;
+      float: left;
+      padding-top: 20px;
+  }
+
+ header {
+      text-align: center;
+      text-decoration: solid;
+      padding-bottom: 10px;
+  }
+.box1, .box2, .box3, .box4, .box5 {
+    height: 200px;
+    width: 100%;
+    display: inline-block;
+    padding-left: 10px;
+    background-color: deepskyblue;
+    margin-left: 20px;
+}

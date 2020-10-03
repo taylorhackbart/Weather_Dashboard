@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather Dashboard</title>
+    <!-- google fonts-->
+    <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css" />
+ 
+  </head>
+
+
+  <body>
+   <header>
+    <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+          <a class="navbar-brand" href="#">Weather Dashboard</a>
+        </nav>
+      </div>
+   </header>
+
+
+  <!-- creating the search-bar from bootstrap-->
+  <div class="container-fluid">
+      <div class="row">
+          <div class= "col-sm-12 col-md-4">
+            <nav class="navbar navbar-light bg-light">
+             <form class="form-inline">
+              <input class="form-control mr-sm-2" id="input" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success my-2 my-sm-0" id="submit">Search</button>
+             </form>
+
+             <button type="button" class="btn btn-outline-secondary col-md-12">San Diego</button>
+             <button type="button" class="btn btn-outline-secondary col-md-12">Denver</button>
+             <button type="button" class="btn btn-outline-secondary col-md-12">London</button>
+             <button type="button" class="btn btn-outline-secondary col-md-12">Seattle</button>
+             <button type="button" class="btn btn-outline-secondary col-md-12">New York City</button>
+             <button type="button" class="btn btn-outline-secondary col-md-12">Portland</button>
+             <button type="button" class="btn btn-outline-secondary col-md-12">Miami</button>
+             <button type="button" class="btn btn-outline-secondary col-md-12">San Francisco</button>
+          </div>
+          <div class="col-sm-12 col-md-8">
+               <div class="weather-conditions">
+               <h1>  <!-- name of city & date--> </h1> <br>
+               <td id="temp"> Temperature: </td> <br>
+               <td id="humidity"> Humidity: </td> <br>
+               <td id="wind"> Wind Speed: </td> <br>
+               <td id="uv"> UV Index: </td> <br>
+               </div>
+               <div class="fiveDay">
+                  <h2 class="row"> 5-Day Forecast: </h2>
+                <div class="row">
+                  <!-- <div id="boxes col-12"> -->
+                  <div class="box1 col-12 col-md-2">box</div>
+                  <div class="box2 col-12 col-md-2">box</div>
+                  <div class="box3 col-12 col-md-2">box</div>
+                  <div class="box4 col-12 col-md-2">box</div>
+                  <div class="box5 col-12 col-md-2">box</div>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>  
+ 
+  
+
+
+
+
+
+    <!-- jquery link from bootstrap-->
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+      integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- bootstrap css and javascript-->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+      integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+      crossorigin="anonymous"
+    ></script>
+    <!-- weather data-->
+    <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
+    <!-- my js page-->
+    <script src="script.js"></script>
+  </body>
+</html>
