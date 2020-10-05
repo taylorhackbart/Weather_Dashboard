@@ -1,92 +1,50 @@
-var city = "Denver";
-var searchBtn = $("submit");
-var userInput = $("input");
+$("#submit").on("click", function(e){
+  e.preventDefault();
+  CitySearch();
 
-var queryURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + city + "&APPID=718877f006fbc005e62f6fd566dd15ac";
 
-function showWeather(){
 
-$.ajax({
-    url: queryURL,
-    method: "GET"
-  }).then(function(response) { 
-        console.log(response);
-        console.log(response.city);
-        console.log(response.list[0].main.temp)
-        console.log(response.list[0].weather)
-        console.log(response.list[0].wind.speed);
-        console.log(response.list[0].main.humidity);
-        console.log(response.list[0].weather[0].description);
-        console.log(response.list[0].weather[0].icon)
-        var row = $(".weather-conditions");
-        var temp = (response.list[0].main.temp)
-        var tempF = (temp - 273.15) * 1.80 + 32
-        console.log(tempF);
-        var cityName = $(".cityname").text(response.city);
-        var wind = $("#wind").text(response.list[0].wind.speed)
-        var humidity = $("#humidity").text(response.list[0].main.humidity);
-        var tempDiv = $("#temp").append(tempF)
-        $("tbody").append(row).append(tempDiv).append(cityName).append(wind).append(humidity);
+function CitySearch(){
+  var city=  $("#input-type").val()
+  console.log(city)
+  var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=718877f006fbc005e62f6fd566dd15ac"
+  $.ajax({
+   url: queryURL,
+   method: "GET"
+   }).then(function(response){
+       console.log(response);
+       var temp = response.main.temp;
+       var tempF = (temp - 273.15) * 1.8 + 32;
+       console.log(tempF);
+       var cityName = $("<h1>").text(response.city);
+       var wind = $("<td>").text(response.main.wind.speed);
+       var tempTag = $("<td>").text(response.main.tempF);
+       var humidity = $("<td>").text(response.main.humidity);
+       var weatherDiv = $(".weather-conditions");
+       weatherDiv.append(tempTag).append(cityName).append(wind);
+   })
 
-});
- 
-} 
-showWeather();
-//create a search button function for a city name
-//
-searchBtn.on("click", function(e){
-    e.preventDefault();
-    console.log()
-})
+
+var queryForecast = "https://api.openweathermap.org/data/2.5/forecast/daily?q=" + city + "&appid=718877f006fbc005e62f6fd566dd15ac"
 
 // 5 day forecast
-var queryForecast = "http://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=718877f006fbc005e62f6fd566dd15ac"
+var queryForecast =
+  "http://api.openweathermap.org/data/2.5/forecast?q=" +
+  city +
+  "&appid=718877f006fbc005e62f6fd566dd15ac";
 $.ajax({
-    url: queryForecast,
-    method: "GET"
-  }).then(function(response) { 
-   console.log(response);
-   console.log(response.city);
-   console.log(response.list[0].main.temp)
-   console.log(response.list[0].weather)
-   console.log(response.list[0].wind.speed);
-   console.log(response.list[0].main.humidity);
-   console.log(response.list[0].weather[0].description);
-   console.log(response.list[0].weather[0].icon)
+  url: queryForecast,
+  method: "GET",
+}).then(function (response) {
+  for (i=0; i<5; i++){
+  var dayIndex = [i];
+  var day1=(response.list[dayIndex]);
+  var tempForecast=(response.list[dayIndex].temp);
+  var tempF = (tempForecast - 273.15) * 1.8 + 32;
 
-    console.log(response);
-    console.log(response.city);
-    console.log(response.list[1].main.temp)
-    console.log(response.list[1].weather)
-    console.log(response.list[1].wind.speed);
-    console.log(response.list[1].main.humidity);
-    console.log(response.list[1].weather[0].description);
-    console.log(response.list[1].weather[0].icon)
-
-    console.log(response);
-    console.log(response.city);
-    console.log(response.list[2].main.temp)
-    console.log(response.list[2].weather)
-    console.log(response.list[2].wind.speed);
-    console.log(response.list[2].main.humidity);
-    console.log(response.list[2].weather[0].description);
-    console.log(response.list[2].weather[0].icon)
-
-    console.log(response);
-    console.log(response.city);
-    console.log(response.list[3].main.temp)
-    console.log(response.list[3].weather)
-    console.log(response.list[3].wind.speed);
-    console.log(response.list[3].main.humidity);
-    console.log(response.list[3].weather[0].description);
-    console.log(response.list[3].weather[0].icon)
-
-    console.log(response);
-    console.log(response.city);
-    console.log(response.list[4].main.temp)
-    console.log(response.list[4].weather)
-    console.log(response.list[4].wind.speed);
-    console.log(response.list[4].main.humidity);
-    console.log(response.list[4].weather[0].description);
-    console.log(response.list[4].weather[0].icon)
-  });
+}
+  
+ 
+});
+}
+})
