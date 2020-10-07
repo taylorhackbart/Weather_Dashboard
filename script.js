@@ -90,9 +90,9 @@ function CitySearch() {
       
      //creating uv values to append specific uv levels 
       if(response.value < 2){
-        uvTag.addClass((uvTag).css("text-color", "green"))
+        uvTag.addClass((uvTag).css("background-color", "green"))
       } else if (response.value < 5 && response.value>2 ){
-        uvTag.addClass((uvTag).css("text-color","yellow"))
+        uvTag.addClass((uvTag).css("background-color","yellow"))
       } else if(response.value < 7 && response.value>5){
         uvTag.addClass((uvTag).css("background-color","orange"))
       } else if (response.value < 10 && response.value>7){
