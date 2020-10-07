@@ -1,26 +1,26 @@
 //global variables for local storage
-var city= "";
+var city = "";
 var searched = [];
 //button function for previous searches to display
-function createButton(city){
+function createButton(city) {
   var button = $("<button>").text(city);
   $("#button-here").append(button);
   //when created button is clicked
 
-  $("#button-here").on("click", function(e){
+  $("#button-here").on("click", function (e) {
     e.preventDefault();
     city = $("#input-type").val();
     CitySearch(city);
-  })
+  });
 
   // creating a click event for the previous searches
-$("#submit").on("click", function (e) {
-  e.preventDefault();
-  city = $("#input-type").val();
-  searched.push(city); //unshift
-  CitySearch();
-  createButton(city);
-});
+  $("#submit").on("click", function (e) {
+    e.preventDefault();
+    city = $("#input-type").val();
+    searched.push(city); //unshift
+    CitySearch();
+    createButton(city);
+  });
 }
 //creating the function to call city info
 function CitySearch() {
@@ -29,14 +29,14 @@ function CitySearch() {
     "https://api.openweathermap.org/data/2.5/weather?q=" +
     city +
     "&appid=718877f006fbc005e62f6fd566dd15ac";
- 
+
   $.ajax({
     url: queryURL,
     method: "GET",
     //setting local storage
-    success: function (){
-      localStorage.setItem("history", JSON.stringify(searched))
-    }
+    success: function () {
+      localStorage.setItem("history", JSON.stringify(searched));
+    },
   }).then(function (response) {
     //not allowing the page to have more than one city search at a time
     $(".weather-conditions").empty();
@@ -83,23 +83,22 @@ function CitySearch() {
       url: queryUV,
       method: "GET",
     }).then(function (response) {
-      
       console.log(response);
       var uvIndex = response.value;
       var uvTag = $("<li>").text("UV Index: " + uvIndex);
-      
-     //creating uv values to append specific uv levels 
-      if(response.value < 2){
-        uvTag.addClass((uvTag).css("background-color", "green"))
-      } else if (response.value < 5 && response.value>2 ){
-        uvTag.addClass((uvTag).css("background-color","yellow"))
-      } else if(response.value < 7 && response.value>5){
-        uvTag.addClass((uvTag).css("background-color","orange"))
-      } else if (response.value < 10 && response.value>7){
-        uvTag.addClass((uvTag).css("background-color","red"))
+
+      //creating uv values to append specific uv levels
+      if (response.value < 2) {
+        uvTag.addClass(uvTag.css("background-color", "green"));
+      } else if (response.value < 5 && response.value > 2) {
+        uvTag.addClass(uvTag.css("background-color", "yellow"));
+      } else if (response.value < 7 && response.value > 5) {
+        uvTag.addClass(uvTag.css("background-color", "orange"));
+      } else if (response.value < 10 && response.value > 7) {
+        uvTag.addClass(uvTag.css("background-color", "red"));
       } else {
-        uvTag.addClass((uvTag).css("background-color","pink"))
-      }      
+        uvTag.addClass(uvTag.css("background-color", "pink"));
+      }
       first.append(uvTag);
     });
   });
@@ -114,6 +113,7 @@ function CitySearch() {
     url: queryForecast,
     method: "GET",
   }).then(function (response) {
+    $("#day" + i).empty();
     console.log(response);
     for (i = 1; i < 6; i++) {
       //not allowing more than one city to be displayed at time again
@@ -147,17 +147,16 @@ function CitySearch() {
         .append(humidTag);
     }
   });
-
-  }
-  // creating history variable to log into local storage
-var history = JSON.parse(localStorage.getItem("history"))
-if (history.length){
-for (i = 1; i < history.length; i++ ){
-  createButton();
 }
+// creating history variable to log into local storage
+var history = JSON.parse(localStorage.getItem("history"));
+if (history) {
+  for (i = 0; i < history.length-1; i++) {
+    createButton();
+  }
 }
 
 //creating on click function for previous search
-$("#button-here").on("click", function(){
+$("#button-here").on("click", function () {
   CitySearch(searched);
-})
+});
