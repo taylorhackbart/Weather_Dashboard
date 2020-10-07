@@ -5,12 +5,19 @@ var searched = [];
 function createButton(city){
   var button = $("<button>").text(city);
   $("#button-here").append(button);
-  
+  //when created button is clicked
+
+  $("#button-here").on("click", function(e){
+    e.preventDefault();
+    city = $("#input-type").val();
+    CitySearch(city);
+  })
+
   // creating a click event for the previous searches
 $("#submit").on("click", function (e) {
   e.preventDefault();
   city = $("#input-type").val();
-  searched.unshift(city);
+  searched.push(city); //unshift
   CitySearch();
   createButton(city);
 });
@@ -145,11 +152,11 @@ function CitySearch() {
   // creating history variable to log into local storage
 var history = JSON.parse(localStorage.getItem("history"))
 if (history.length){
-for (i = 0; i < history.length; i++ ){
+for (i = 1; i < history.length; i++ ){
   createButton();
 }
 }
-
+console.log(history)
 //creating on click function for previous search
 $("#button-here").on("click", function(){
   CitySearch(searched);
