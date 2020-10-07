@@ -26,7 +26,7 @@ $("#submit").on("click", function (e) {
 function CitySearch() {
   city = $("#input-type").val();
   var queryURL =
-    "http://api.openweathermap.org/data/2.5/weather?q=" +
+    "https://api.openweathermap.org/data/2.5/weather?q=" +
     city +
     "&appid=718877f006fbc005e62f6fd566dd15ac";
  
@@ -59,7 +59,7 @@ function CitySearch() {
     var humidTag = $("<li>").text("Humidity: " + humidity);
     var img = $("<img>").attr(
       "src",
-      "http://openweathermap.org/img/w/" + icon + ".png"
+      "https://openweathermap.org/img/w/" + icon + ".png"
     );
     var row = $(".weather-conditions");
     var first = $(".weather-conditions")
@@ -74,7 +74,7 @@ function CitySearch() {
     var lon = response.coord.lon;
 
     var queryUV =
-      "http://api.openweathermap.org/data/2.5/uvi?lat=" +
+      "https://api.openweathermap.org/data/2.5/uvi?lat=" +
       lat +
       "&lon=" +
       lon +
@@ -122,7 +122,7 @@ function CitySearch() {
       var icon = response.list[dayIndex].weather[0].icon;
       var img = $("<img>").attr(
         "src",
-        "http://openweathermap.org/img/w/" + icon + ".png"
+        "https://openweathermap.org/img/w/" + icon + ".png"
       );
       var tempForecast = response.list[dayIndex].temp.day;
       var tempF = Math.round((tempForecast - 273.15) * 1.8 + 32);
@@ -156,7 +156,7 @@ for (i = 1; i < history.length; i++ ){
   createButton();
 }
 }
-console.log(history)
+
 //creating on click function for previous search
 $("#button-here").on("click", function(){
   CitySearch(searched);
