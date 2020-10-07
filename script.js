@@ -1,11 +1,10 @@
 //global variables for local storage
-var city = "";
+var city= "";
 var searched = [];
 //button function for previous searches to display
 function createButton(city){
-  $(this).text();
-  var li = $("<li>").text(city);
-  $("#button"+ i).append(li);
+  var button = $("<button>").text(city);
+  $("#button-here").append(button);
   
   // creating a click event for the previous searches
 $("#submit").on("click", function (e) {
@@ -13,13 +12,12 @@ $("#submit").on("click", function (e) {
   city = $("#input-type").val();
   searched.unshift(city);
   CitySearch();
-  
+  createButton(city);
 });
 }
 //creating the function to call city info
 function CitySearch() {
   city = $("#input-type").val();
-  console.log(city);
   var queryURL =
     "http://api.openweathermap.org/data/2.5/weather?q=" +
     city +
@@ -29,8 +27,8 @@ function CitySearch() {
     url: queryURL,
     method: "GET",
     //setting local storage
-    success: function (data){
-      localStorage.setItem("history", JSON.stringify([...searched]))
+    success: function (){
+      localStorage.setItem("history", JSON.stringify(searched))
     }
   }).then(function (response) {
     //not allowing the page to have more than one city search at a time
@@ -82,35 +80,18 @@ function CitySearch() {
       console.log(response);
       var uvIndex = response.value;
       var uvTag = $("<li>").text("UV Index: " + uvIndex);
-
-      var imglow = "/Users/taylorhackbart/Documents/classwork/homework/homework6/Assets/1-2.png"
-      var newlow = $("<img>").attr("src", imglow);
-
       
-      var img2 = "/Users/taylorhackbart/Documents/classwork/homework/homework6/Assets/3-5.png"
-      var new2 = $("<img>").attr("src", img2);
-
-        
-      var img3 = "/Users/taylorhackbart/Documents/classwork/homework/homework6/Assets/6-7.png"
-      var new3 = $("<img>").attr("src", img3);    
-
-      var img4 = "/Users/taylorhackbart/Documents/classwork/homework/homework6/Assets/8-10.png"
-      var new4 = $("<img>").attr("src", img4);      
-
-      
-      var img5 = "/Users/taylorhackbart/Documents/classwork/homework/homework6/Assets/11.png"
-      var new5 = $("<img>").attr("src", img5);
-
-      if(response.value<2){
-        uvTag.append(newlow)
-      } else if (response.value <5){
-        uvTag.append(img2)
-      } else if(response.value <7){
-        uvTag.append(img3)
-      } else if (response.value <10){
-        uvTag.append(img4)
+     //creating uv values to append specific uv levels 
+      if(response.value < 2){
+        uvTag.append($("#img1").css("display","block"))
+      } else if (response.value < 5 && response.value>2 ){
+        uvTag.append($("#img2").css("display","block"))
+      } else if(response.value < 7 && response.value>5){
+        uvTag.append($("#img3").css("display","block"))
+      } else if (response.value < 10 && response.value>7){
+        uvTag.append($("#img4").css("display","block"))
       } else {
-        uvTag.append(img5)
+        uvTag.append($("#img5").css("display","block"))
       }      
       first.append(uvTag);
     });
@@ -161,10 +142,15 @@ function CitySearch() {
   });
 
   }
-  //creating history variable to log into local storage
-var history = JSON.parse(localStorage.getItem("history"))||[]
+  // creating history variable to log into local storage
+var history = JSON.parse(localStorage.getItem("history"))
 if (history.length){
-for (i=0; i<history.length; i++ ){
-  createButton(history[i]);
+for (i = 0; i < history.length; i++ ){
+  createButton();
 }
 }
+
+//creating on click function for previous search
+$("#button-here").on("click", function(){
+  CitySearch(searched);
+})

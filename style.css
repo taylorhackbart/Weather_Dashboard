@@ -36,3 +36,8 @@ body {
     background-color: deepskyblue;
     margin-left: 20px;
 }
+#img1, #img2, #img3, #img4, #img5 {
+    display: none;
+    height: 50px;
+    width: 130px;
+}
