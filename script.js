@@ -3,27 +3,21 @@ var city = "";
 var searched = [];
 //button function for previous searches to display
 function createButton(city) {
-  var button = $("<button>").text(city);
+  var button = $("<button>").text(city).attr("id", city).attr("class", "searchBtn");
   $("#button-here").append(button);
-  //when created button is clicked
-
-  $("#button-here").on("click", function (e) {
-    e.preventDefault();
-    city = $("#input-type").val();
-    CitySearch(city);
-  });
-
+};
+//one function that loops through all the cities in the array and renders buttons
   // creating a click event for the previous searches
-  $("#submit").on("click", function (e) {
+  $("#submit").on("click", function(e) {
     e.preventDefault();
     city = $("#input-type").val();
     searched.push(city); //unshift
-    CitySearch();
+    CitySearch(city);
     createButton(city);
   });
-}
+
 //creating the function to call city info
-function CitySearch() {
+function CitySearch(city) {
   city = $("#input-type").val();
   var queryURL =
     "https://api.openweathermap.org/data/2.5/weather?q=" +
@@ -35,12 +29,13 @@ function CitySearch() {
     method: "GET",
     //setting local storage
     success: function () {
-      localStorage.setItem("history", JSON.stringify(searched));
+      localStorage.setItem("searchHistory", JSON.stringify(searched));
     },
   }).then(function (response) {
     //not allowing the page to have more than one city search at a time
     $(".weather-conditions").empty();
     console.log(response);
+    //creating current date
     var today = new Date();
     var date =
       today.getFullYear() +
@@ -69,7 +64,7 @@ function CitySearch() {
       .append(tempTag)
       .append(windTag)
       .append(humidTag);
-
+    //pulling coordinates from response
     var lat = response.coord.lat;
     var lon = response.coord.lon;
 
@@ -83,6 +78,7 @@ function CitySearch() {
       url: queryUV,
       method: "GET",
     }).then(function (response) {
+      $("<li>").empty();
       console.log(response);
       var uvIndex = response.value;
       var uvTag = $("<li>").text("UV Index: " + uvIndex);
@@ -115,7 +111,7 @@ function CitySearch() {
   }).then(function (response) {
     $("#day" + i).empty();
     console.log(response);
-    for (i = 1; i < 6; i++) {
+    for (i = 0; i < 6; i++) {
       //not allowing more than one city to be displayed at time again
       $("#day").empty();
       var dayIndex = [i];
@@ -148,15 +144,20 @@ function CitySearch() {
     }
   });
 }
-// creating history variable to log into local storage
-var history = JSON.parse(localStorage.getItem("history"));
-if (history) {
-  for (i = 0; i < history.length-1; i++) {
-    createButton();
-  }
-}
+$("#button-here").on("click", function(e){
+  e.preventDefault();
+  console.log("click");
+  var searchTerm = $(this).attr("class id");
+  CitySearch(searchTerm);
+  console.log(searchTerm);
+})
 
-//creating on click function for previous search
-$("#button-here").on("click", function () {
-  CitySearch(searched);
-});
+// creating history variable to log into local storage
+var storage = JSON.parse(localStorage.getItem("searchHistory"));
+if (storage) {
+  $("#button-here").empty();
+  for (var i = 0; i < storage.length; i++) {
+    createButton(storage[i]);
+    console.log(storage)
+  }
+} 
